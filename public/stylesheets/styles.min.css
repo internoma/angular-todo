@@ -1,0 +1,1 @@
+@charset "UTF-8";#test{color:gray}.hecho-true{color:gray}.hecho-false{color:#e74c3c}.hecho-cont-true:after{content:'[ Realizada ]';font-size:.8em}.hecho-cont-false:after{content:'[ Pendiente ]';font-size:.8em}
