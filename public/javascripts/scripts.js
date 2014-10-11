@@ -1,5 +1,5 @@
-/*jslint browser: true*/
-/*global $, jQuery*/
+/*jslint browser: true, plusplus: true, regexp: true*/
+/*global $, jQuery, angular, require, module*/
 
 /**
  * App Angular JS

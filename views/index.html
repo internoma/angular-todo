@@ -48,11 +48,11 @@
 						<!-- repeat tarea in tareas -->
 						<tr>
 							<td>{{$index+1}}</td>
-							<td class="hecho-{{tarea.hecho}}" ng-click="">
+							<td class="" ng-click="">
 								<label class="hecho-{{tarea.hecho}}">
 									<input type="checkbox" ng-model="tarea.hecho" />&nbsp;{{tarea.texto|uppercase}}
 								</label>
-								<span class="label label-{{tarea.hecho ? 'success' : 'warning'}} hecho-cont-{{tarea.hecho}}">tarea </span>
+								<span class="label label-{{tarea.hecho ? 'success' : 'warning'}}">tarea </span>
 							</td>
 							<td>
 								<span class="glyphicon glyphicon-star text-warning"></span>
@@ -109,6 +109,7 @@
 	</div>
 
 	<!-- Load JavaScripts -->
+	<script src="/javascripts/modernizr.min.js"></script>
 	<script src="/javascripts/jquery-2.1.1.min.js"></script>
 	<script src="/javascripts/angular.min.js"></script>
 	<script src="/javascripts/angular-locale_es-es.js"></script>

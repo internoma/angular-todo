@@ -1,18 +1,16 @@
-@charset "UTF-8";
- #test {
-	color: gray;
-}
+#test {
+  color: gray; }
+
 .hecho-true {
-	color: gray;
-}
+  color: gray; }
+  .hecho-true:after {
+    content: '[ Realizada ]';
+    font-size: 0.8em; }
+
 .hecho-false {
-	color: #e74c3c;
-}
-.hecho-cont-true:after {
-	content: '[ Realizada ]';
-	font-size: 0.8em;
-}
-.hecho-cont-false:after {
-	content: '[ Pendiente ]';
-	font-size: 0.8em;
-}
+  color: #e74c3c; }
+  .hecho-false:after {
+    content: '[ Pendiente ]';
+    font-size: 0.8em; }
+
+/*# sourceMappingURL=styles.css.map */

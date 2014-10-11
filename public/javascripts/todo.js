@@ -1,5 +1,6 @@
-/*jslint browser: true*/
-/*global angular, $, jQuery*/
+/*jslint browser: true, plusplus: true, regexp: true*/
+/*global $, jQuery, angular, cacheService, require, module, Modernizr*/
+
 
 /**
  * App Angular JS
@@ -9,20 +10,71 @@
 
 var appTodo = angular.module('appTodo', []);
 
-function ngPruebasController($scope) {
+
+appTodo.factory('storageService', function ($rootScope) {
 
 	'use strict';
 
-	$scope.tareas = [{
-		texto: 'Mi primera tarea',
-		hecho: true
-	}, {
-		texto: 'Mi tercera tarea',
-		hecho: false
-	}, {
-		texto: 'Mi segunda tarea',
-		hecho: true
-	}];
+	return {
+
+		get: function (key) {
+			return JSON.parse(localStorage.getItem(key));
+		},
+
+		save: function (key, data) {
+			localStorage.setItem(key, angular.toJson(data));
+		},
+
+		remove: function (key) {
+			localStorage.removeItem(key);
+		},
+
+		clearAll: function () {
+			localStorage.clear();
+		}
+	};
+});
+
+appTodo.factory('cacheService', function ($http, storageService) {
+
+	'use strict';
+
+	return {
+
+		getData: function (key) {
+			return storageService.get(key);
+		},
+
+		setData: function (key, data) {
+			storageService.save(key, data);
+		},
+
+		removeData: function (key) {
+			storageService.remove(key);
+		}
+	};
+});
+
+if (Modernizr.localstorage) {
+	// window.localStorage is available!
+	window.console.info('window.localStorage is available!');
+} else {
+	// no native support for HTML5 storage :(
+	window.console.info('no native support for HTML5 storage :');
+}
+
+function ngPruebasController($scope, cacheService) {
+
+	'use strict';
+
+	// obtener tareas desde localstorage
+	$scope.tareas = cacheService.getData('tareas');
+
+	if (!$scope.tareas) {
+		$scope.tareas = [];
+	}
+
+	window.console.log($scope.tareas);
 
 	$scope.agregarTarea = function () {
 		if ($scope.textoNuevaTarea) {
@@ -31,6 +83,8 @@ function ngPruebasController($scope) {
 				hecho: false
 			});
 			$scope.textoNuevaTarea = '';
+			// guardar tareas en localstorage
+			cacheService.setData('tareas', $scope.tareas);
 		}
 		document.getElementById('nuevaTarea').focus();
 	};
@@ -51,6 +105,7 @@ function ngPruebasController($scope) {
 				$scope.tareas.push(tarea);
 			}
 		});
+		cacheService.setData('tareas', $scope.tareas);
 	};
 
 	$scope.ordenar = function (orden) {
