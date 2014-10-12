@@ -1,34 +1,29 @@
 /*jslint browser: true, plusplus: true, regexp: true*/
 /*global $, jQuery, angular, cacheService, require, module, Modernizr*/
 
-
 /**
  * App Angular JS
  **/
 
 // @TODO [ ] Aprender angular JS.
+// @TODO [x] Guardar datos con localStorage.
 
 var appTodo = angular.module('appTodo', []);
-
 
 appTodo.factory('storageService', function ($rootScope) {
 
 	'use strict';
 
 	return {
-
 		get: function (key) {
 			return JSON.parse(localStorage.getItem(key));
 		},
-
 		save: function (key, data) {
 			localStorage.setItem(key, angular.toJson(data));
 		},
-
 		remove: function (key) {
 			localStorage.removeItem(key);
 		},
-
 		clearAll: function () {
 			localStorage.clear();
 		}
@@ -40,15 +35,12 @@ appTodo.factory('cacheService', function ($http, storageService) {
 	'use strict';
 
 	return {
-
 		getData: function (key) {
 			return storageService.get(key);
 		},
-
 		setData: function (key, data) {
 			storageService.save(key, data);
 		},
-
 		removeData: function (key) {
 			storageService.remove(key);
 		}
@@ -67,14 +59,18 @@ function ngPruebasController($scope, cacheService) {
 
 	'use strict';
 
+	$scope.hideWelcome = true;
+
 	// obtener tareas desde localstorage
 	$scope.tareas = cacheService.getData('tareas');
 
-	if (!$scope.tareas) {
-		$scope.tareas = [];
+	// window.console.log($scope.tareas); // * for debug
+	window.console.log($scope.hideWelcome); // * for debug
+
+	if ($scope.tareas.length === 0) {
+		$scope.hideWelcome = false;
 	}
 
-	window.console.log($scope.tareas);
 
 	$scope.agregarTarea = function () {
 		if ($scope.textoNuevaTarea) {
@@ -85,6 +81,7 @@ function ngPruebasController($scope, cacheService) {
 			$scope.textoNuevaTarea = '';
 			// guardar tareas en localstorage
 			cacheService.setData('tareas', $scope.tareas);
+			$scope.hideWelcome = true;
 		}
 		document.getElementById('nuevaTarea').focus();
 	};
@@ -106,6 +103,7 @@ function ngPruebasController($scope, cacheService) {
 			}
 		});
 		cacheService.setData('tareas', $scope.tareas);
+		$scope.hideWelcome = false;
 	};
 
 	$scope.ordenar = function (orden) {

@@ -1,1 +1,1 @@
-@charset "UTF-8";#test{color:gray}.hecho-true{color:gray}.hecho-false{color:#e74c3c}.hecho-cont-true:after{content:'[ Realizada ]';font-size:.8em}.hecho-cont-false:after{content:'[ Pendiente ]';font-size:.8em}
+#test{color:gray}.hecho-true{color:gray}.hecho-true:after{content:'[ Realizada ]';font-size:.8em}.hecho-false{color:#e74c3c}.hecho-false:after{content:'[ Pendiente ]';font-size:.8em}.ng-hide{display:block!important;position:absolute;top:-9999px;left:-9999px}
